@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: guestbook-ui
+  labels:
+    app: guestbook-ui
 spec:
   replicas: 2
   revisionHistoryLimit: 3
@@ -14,7 +16,14 @@ spec:
         app: guestbook-ui
     spec:
       containers:
-      - image: nginx
-        name: guestbook-ui
-        ports:
-        - containerPort: 80
+        - name: guestbook-ui
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
